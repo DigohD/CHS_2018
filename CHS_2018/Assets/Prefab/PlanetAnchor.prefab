@@ -303,6 +303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bf161a43ac9d941bd8ea758426f2b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  P_PlanetPart: {fileID: 1206263264352862, guid: 3b1ad9a5e6e2b4047826c9c44f646ba7,
+    type: 2}
   planet: {fileID: 1914288909563922}
   G_HoveredCircle: {fileID: 1152862139739286}
   G_InputCol: {fileID: 1237682632933766}

@@ -16,8 +16,8 @@ public class PlanetCollission : MonoBehaviour {
     {
         if (coll.gameObject.tag == "Planet")
         {
-            Destroy(transform.parent.gameObject);
-            Destroy(coll.gameObject.transform.parent.gameObject);
+            transform.parent.gameObject.GetComponent<Planet>().destroy();
+            coll.gameObject.transform.parent.gameObject.GetComponent<Planet>().destroy();
         }
     }
 }

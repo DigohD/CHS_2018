@@ -9,6 +9,8 @@ public class Planet : MonoBehaviour {
     protected float velocity;
     protected float mass;
 
+    public GameObject P_PlanetPart;
+
     public GameObject planet;
     public GameObject G_HoveredCircle;
     public GameObject G_InputCol;
@@ -87,5 +89,20 @@ public class Planet : MonoBehaviour {
     private void LateUpdate()
     {
         isHovered = false;
+    }
+
+    public Vector3 getPlanetPosition()
+    {
+        return planet.transform.position;
+    }
+
+    public void destroy()
+    {
+        for(int i = 0; i < (int) mass; i++)
+        {
+            Instantiate(P_PlanetPart, planet.transform.position, Quaternion.identity);
+        }
+
+        Destroy(gameObject);
     }
 }
