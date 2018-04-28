@@ -11,9 +11,12 @@ public class Sun : MonoBehaviour {
 
     protected float velocity;
 
+    public GameObject P_ExplosionEffect;
+
     public GameObject G_Visuals;
     public GameObject G_Spikes;
     public GameObject G_TractorBeam;
+    public GameObject G_BlackHole;
     ParticleSystem tractorParticles;
 
     private float eatTimer = 1f;
@@ -22,11 +25,11 @@ public class Sun : MonoBehaviour {
 
 	void Start () {
         tractorParticles = G_TractorBeam.GetComponent<ParticleSystem>();
-
     }
-	
+
+    float explodeTimer;
 	void Update () {
-        if (MouseInput.isChanneling)
+        if (MouseInput.isChanneling && !GameControl.endingGame)
         {
             if (eatTimer > 0.1f)
                 G_Visuals.GetComponent<Animator>().SetInteger("State", 1);
@@ -45,6 +48,21 @@ public class Sun : MonoBehaviour {
             ParticleSystem.MainModule mm = tractorParticles.main;
             ParticleSystem.MinMaxCurve mmc = new ParticleSystem.MinMaxCurve(diff.magnitude / 573.91f);
             mm.startLifetime = mmc;
+        }
+        else if (GameControl.endingGame)
+        {
+            G_Visuals.GetComponent<Animator>().SetInteger("State", 3);
+
+            explodeTimer += Time.deltaTime;
+            if(explodeTimer > 1f)
+            {
+                Instantiate(P_ExplosionEffect, transform.position, Quaternion.identity);
+
+                G_BlackHole.SetActive(true);
+
+                Destroy(gameObject);
+                return;
+            }
         }
         else
         {

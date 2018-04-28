@@ -110,3 +110,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   P_BGStar: {fileID: 1959951301094032, guid: 7c17c92dc3500054198e6ba34c4f6fec, type: 2}
+  stars: 80

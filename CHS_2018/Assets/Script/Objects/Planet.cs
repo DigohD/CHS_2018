@@ -92,10 +92,6 @@ public class Planet : MonoBehaviour {
         planet.transform.SetParent(null);
         planet.transform.localScale = Vector3.one * ((mass / 33f * 18f) + 6f);
         planet.transform.SetParent(transform);
-
-        G_InputCol.transform.SetParent(null);
-        G_InputCol.transform.localScale = Vector3.one * ((mass / 33f * 18f) + 6f);
-        G_InputCol.transform.SetParent(transform);
     }
 
     private void LateUpdate()

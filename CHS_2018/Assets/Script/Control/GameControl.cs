@@ -9,6 +9,9 @@ public class GameControl : MonoBehaviour {
 
     public GameObject P_Planet;
 
+    public GameObject P_BG;
+    public GameObject G_BG;
+
     private ArrayList planetList = new ArrayList();
 
     public static int time = 180;
@@ -49,7 +52,7 @@ public class GameControl : MonoBehaviour {
             switch (endGameState)
             {
                 case EndGameState.END_GAME_FLASH:
-                    if(timer > 3f)
+                    if(timer > 4f)
                     {
                         endGameState = EndGameState.FADE_OUT;
                         timer = 0;
@@ -90,6 +93,10 @@ public class GameControl : MonoBehaviour {
                         Destroy(go);
 
                     generateLevel();
+
+                    GameObject tmp = Instantiate(P_BG, G_BG.transform.position, Quaternion.identity);
+                    Destroy(G_BG);
+                    G_BG = tmp;
 
                     shiftState = ShiftState.FADE_IN;
                     timer = 0;
