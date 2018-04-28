@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Planet
   - PlanetInput
+  - PlanetPart
+  - PlanetAnchor
   layers:
   - Default
   - TransparentFX

@@ -12,10 +12,13 @@ public class Sun : MonoBehaviour {
     protected float velocity;
 
     public GameObject G_Visuals;
+    public GameObject G_Spikes;
     public GameObject G_TractorBeam;
     ParticleSystem tractorParticles;
 
     private float eatTimer = 1f;
+    private float spikeVelocity = 1f;
+    private float spikeTargetVelocity = 1f;
 
 	void Start () {
         tractorParticles = G_TractorBeam.GetComponent<ParticleSystem>();
@@ -27,6 +30,9 @@ public class Sun : MonoBehaviour {
         {
             if (eatTimer > 0.1f)
                 G_Visuals.GetComponent<Animator>().SetInteger("State", 1);
+
+            spikeTargetVelocity = 5f;
+
             if (!tractorParticles.isPlaying)
                 tractorParticles.Play();
 
@@ -35,9 +41,6 @@ public class Sun : MonoBehaviour {
 
             Vector3 diff = transform.position - planetPos;
             G_TractorBeam.transform.LookAt(diff.normalized);
-
-            Debug.LogWarning(planetPos + " PLANET");
-            Debug.LogWarning(diff.magnitude + " MAG");
 
             ParticleSystem.MainModule mm = tractorParticles.main;
             ParticleSystem.MinMaxCurve mmc = new ParticleSystem.MinMaxCurve(diff.magnitude / 573.91f);
@@ -48,14 +51,21 @@ public class Sun : MonoBehaviour {
             if (eatTimer > 0.1f)
                 G_Visuals.GetComponent<Animator>().SetInteger("State", 0);
 
+            spikeTargetVelocity = 1f;
+
             tractorParticles.Stop();
         }
 
         eatTimer += Time.deltaTime;
         if(eatTimer <= 0.1f)
         {
+            spikeTargetVelocity = 0.3f;
+
             G_Visuals.GetComponent<Animator>().SetInteger("State", 2);
         }
+
+        spikeVelocity = Mathf.Lerp(spikeVelocity, spikeTargetVelocity, Time.deltaTime * 6);
+        G_Spikes.transform.Rotate(0, spikeVelocity * Time.deltaTime * 80f, 0);
     }
 
     void OnTriggerEnter(Collider coll)

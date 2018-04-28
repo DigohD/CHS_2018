@@ -7,7 +7,7 @@ public class Planet : MonoBehaviour {
     protected GameObject player;
 
     protected float velocity;
-    protected float mass;
+    public float mass;
 
     public GameObject P_PlanetPart;
 
@@ -19,12 +19,20 @@ public class Planet : MonoBehaviour {
 
     public bool isHovered;
 
+    protected float maxMass;
+    protected float inertia;
+
+    protected float inputColScale;
+
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
+        G_InputCol.GetComponent<InputCol>().parent = gameObject;
     }
 
     public void init(int orderInSystem)
     {
+        G_InputCol.transform.SetParent(null);
+
         float distance = orderInSystem * 1.5f + Random.Range(-0.25f, 0.25f);
         transform.position = Vector3.zero;
         transform.localScale = Vector3.one * distance;
@@ -38,12 +46,16 @@ public class Planet : MonoBehaviour {
         velocity = distancePercent * distancePercent * 5f;
 
         mass = Random.Range(1f + (orderInSystem * 0.5f), 1f + orderInSystem + (orderInSystem * 2f));
+        maxMass = 1f + 11 + (11 * 2f);
+        inertia = 1 - (mass / maxMass);
 
         adjustPlanet();
     }
 
     void Update () {
         transform.Rotate(0, velocity * Time.deltaTime * 80f, 0);
+
+        G_InputCol.transform.position = planet.transform.position;
 
         G_HoveredCircle.SetActive(isHovered);
     }
@@ -53,7 +65,7 @@ public class Planet : MonoBehaviour {
         if (transform.localScale.x >= 16.5f)
             return;
 
-        transform.localScale += Vector3.one * Time.deltaTime * 3f;
+        transform.localScale += Vector3.one * Time.deltaTime * 5f * inertia;
 
         adjustPlanet();
     }
@@ -63,7 +75,7 @@ public class Planet : MonoBehaviour {
         if (transform.localScale.x < 1.5f)
             return;
 
-        transform.localScale -= Vector3.one * Time.deltaTime * 3f;
+        transform.localScale -= Vector3.one * Time.deltaTime * 5f * inertia;
 
         adjustPlanet();
     }
@@ -102,6 +114,8 @@ public class Planet : MonoBehaviour {
         {
             Instantiate(P_PlanetPart, planet.transform.position, Quaternion.identity);
         }
+
+        GameControl.score += (int) mass * 1000;
 
         Destroy(gameObject);
     }

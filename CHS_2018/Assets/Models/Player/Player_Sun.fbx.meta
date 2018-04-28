@@ -16,6 +16,7 @@ ModelImporter:
     100016: Sol
     100018: SunRayBone
     100020: SunRayBone_end
+    100022: Sol.001
     400000: Armature
     400002: FaceBone
     400004: FaceBone_end
@@ -27,10 +28,13 @@ ModelImporter:
     400016: Sol
     400018: SunRayBone
     400020: SunRayBone_end
+    400022: Sol.001
     2100000: No Name
     4300000: Sol
+    4300002: Sol.001
     9500000: //RootNode
     13700000: Sol
+    13700002: Sol.001
   externalObjects: {}
   materials:
     importMaterials: 1

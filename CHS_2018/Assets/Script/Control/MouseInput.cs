@@ -9,8 +9,10 @@ public class MouseInput : MonoBehaviour {
     public static Planet currentlySelected;
 
 	void Start () {
-		
-	}
+        isChanneling = false;
+        currentlySelected = null;
+
+    }
 
     float deselectTimer = 0f;
 	void Update () {
@@ -24,11 +26,11 @@ public class MouseInput : MonoBehaviour {
             Transform objectHit = hit.transform;
             if (objectHit.tag.Equals("PlanetInput"))
             {
-                currentlySelected = objectHit.GetComponentInParent<Planet>();
+                currentlySelected = objectHit.GetComponent<InputCol>().parent.GetComponent<Planet>();
             }
             deselectTimer = 0;
         }
-        else if(currentlySelected != null && Input.GetMouseButton(0))
+        else if(currentlySelected != null && Input.GetMouseButton(0) && !GameControl.isInputFreezed())
         {
             deselectTimer = 0.5f;
 
@@ -36,7 +38,7 @@ public class MouseInput : MonoBehaviour {
 
             isChanneling = true;
         }
-        else if (currentlySelected != null && Input.GetMouseButton(1))
+        else if (currentlySelected != null && Input.GetMouseButton(1) && !GameControl.isInputFreezed())
         {
             deselectTimer = 0.5f;
 

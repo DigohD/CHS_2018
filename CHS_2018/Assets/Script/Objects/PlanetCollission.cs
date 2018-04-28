@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class PlanetCollission : MonoBehaviour {
 
-	void Start () {
-		
-	}
-	
-	void Update () {
-		
-	}
-
     void OnTriggerEnter(Collider coll)
     {
         if (coll.gameObject.tag == "Planet")

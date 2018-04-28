@@ -52,6 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4142931418832164}
   - component: {fileID: 135558583364798272}
+  - component: {fileID: 114976988241346836}
   m_Layer: 0
   m_Name: InputCol
   m_TagString: PlanetInput
@@ -86,7 +87,7 @@ GameObject:
   - component: {fileID: 114527374062822730}
   m_Layer: 0
   m_Name: PlanetAnchor
-  m_TagString: Untagged
+  m_TagString: PlanetAnchor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 1237682632933766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 17.9}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 8.556749, y: 8.556751, z: 8.556751}
   m_Children: []
   m_Father: {fileID: 4325333799871252}
   m_RootOrder: 2
@@ -303,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bf161a43ac9d941bd8ea758426f2b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mass: 0
   P_PlanetPart: {fileID: 1206263264352862, guid: 3b1ad9a5e6e2b4047826c9c44f646ba7,
     type: 2}
   planet: {fileID: 1914288909563922}
@@ -310,6 +312,18 @@ MonoBehaviour:
   G_InputCol: {fileID: 1237682632933766}
   orbitCircle: {fileID: 212784251253189854}
   isHovered: 0
+--- !u!114 &114976988241346836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1237682632933766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 235b531594dcb0a4291b60723d77693d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!135 &135558583364798272
 SphereCollider:
   m_ObjectHideFlags: 1
