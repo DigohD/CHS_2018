@@ -8,6 +8,7 @@ public class PlanetCollission : MonoBehaviour {
     {
         if (coll.gameObject.tag == "Planet")
         {
+            Debug.LogWarning("COLLLLL");
             transform.parent.gameObject.GetComponent<Planet>().destroy();
             coll.gameObject.transform.parent.gameObject.GetComponent<Planet>().destroy();
         }

@@ -10,6 +10,9 @@ public class UI : MonoBehaviour {
     public Image fade;
     public Text gameOverText;
 
+    public GameObject G_Warp;
+    public GameObject G_Combo;
+
     public static bool fadeOut;
 
     float fadeOpacity = 0;
@@ -59,6 +62,19 @@ public class UI : MonoBehaviour {
                 endGameTimer = 0;
                 gameOverText.gameObject.SetActive(!gameOverText.gameObject.activeInHierarchy);
             }
+        }
+
+        G_Warp.SetActive(GameControl.mayWarp);
+
+        if(GameControl.combo > 1)
+        {
+            G_Combo.GetComponent<Text>().text = GameControl.combo + "x";
+            G_Combo.transform.GetChild(0).GetComponent<Text>().text = GameControl.combo + "x";
+            G_Combo.SetActive(true);
+        }
+        else
+        {
+            G_Combo.SetActive(false);
         }
 
         fade.color = new Color(0, 0, 0, fadeOpacity);

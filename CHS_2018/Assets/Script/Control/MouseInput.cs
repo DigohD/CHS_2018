@@ -21,6 +21,9 @@ public class MouseInput : MonoBehaviour {
 
         isChanneling = false;
 
+        if (!currentlySelected)
+            currentlySelected = null;
+
         if (!Input.GetMouseButton(0) && !Input.GetMouseButton(1) && Physics.Raycast(ray, out hit))
         {
             Transform objectHit = hit.transform;

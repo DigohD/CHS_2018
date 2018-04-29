@@ -24,6 +24,10 @@ public class Planet : MonoBehaviour {
 
     protected float inputColScale;
 
+    public Material[] mats;
+
+    bool isdead;
+
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         G_InputCol.GetComponent<InputCol>().parent = gameObject;
@@ -31,6 +35,8 @@ public class Planet : MonoBehaviour {
 
     public void init(int orderInSystem)
     {
+        planet.GetComponent<MeshRenderer>().materials = new Material[1] { mats[Random.Range(0, 8)] };
+
         G_InputCol.transform.SetParent(null);
 
         float distance = orderInSystem * 1.5f + Random.Range(-0.25f, 0.25f);
@@ -90,7 +96,7 @@ public class Planet : MonoBehaviour {
         velocity = distancePercent * distancePercent * 5f;
 
         planet.transform.SetParent(null);
-        planet.transform.localScale = Vector3.one * ((mass / 33f * 18f) + 6f);
+        planet.transform.localScale = Vector3.one * 9f * ((mass / 33f * 18f) + 6f);
         planet.transform.SetParent(transform);
     }
 
@@ -106,13 +112,28 @@ public class Planet : MonoBehaviour {
 
     public void destroy()
     {
+        if (isdead)
+            return;
+
         for(int i = 0; i < (int) mass; i++)
         {
             Instantiate(P_PlanetPart, planet.transform.position, Quaternion.identity);
         }
 
-        GameControl.score += (int) mass * 1000;
+        foreach (Collider c in GetComponents<Collider>())
+            c.enabled = false;
 
+        GameControl.mayWarp = true;
+
+        int combo = GameControl.combo > 1 ? GameControl.combo : 1;
+
+        GameControl.score += (int) mass * 1000 * combo;
+
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameControl>().planetDied();
+
+        isdead = true;
+
+        Destroy(G_InputCol);
         Destroy(gameObject);
     }
 }

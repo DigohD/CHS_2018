@@ -19,16 +19,24 @@ public class GameControl : MonoBehaviour {
     public static bool transitioning;
     public static bool endingGame;
 
+    public static bool mayWarp;
+
     private enum ShiftState { FADE_OUT, GENERATE_LEVEL, FADE_IN };
     private enum EndGameState { END_GAME_FLASH, FADE_OUT, SWITCH_SCENE};
     private ShiftState shiftState;
     private EndGameState endGameState;
 
+    public static int combo;
+    private float comboTimer;
+
     void Start () {
         time = 180;
         transitioning = false;
         endingGame = false;
+        mayWarp = false;
         score = 0;
+        combo = 0;
+        comboTimer = 0;
 
         generateLevel();
 	}
@@ -38,6 +46,20 @@ public class GameControl : MonoBehaviour {
     void Update () {
         timer += Time.deltaTime;
         timeTimer += Time.deltaTime;
+
+        if(combo > 1)
+        {
+            comboTimer += Time.deltaTime;
+            if(comboTimer > 5)
+            {
+                comboTimer = 0;
+                combo = 0;
+            }
+        }
+        else
+        {
+            comboTimer = 0;
+        }
 
         if (!endingGame && time <= 0)
         {
@@ -98,6 +120,8 @@ public class GameControl : MonoBehaviour {
                     Destroy(G_BG);
                     G_BG = tmp;
 
+                    mayWarp = false;
+
                     shiftState = ShiftState.FADE_IN;
                     timer = 0;
                     break;
@@ -115,7 +139,7 @@ public class GameControl : MonoBehaviour {
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (mayWarp && Input.GetKeyDown(KeyCode.Space))
         {
             transitioning = true;
             timer = 0;
@@ -141,5 +165,31 @@ public class GameControl : MonoBehaviour {
     public static bool isInputFreezed()
     {
         return transitioning || endingGame;
+    }
+
+    public void planetDied()
+    {
+        AudioManager.playExplosion = true;
+
+        combo += 1;
+        comboTimer = 0;
+        if(combo > 2)
+        {
+            AudioManager.playCombo = true;
+            AudioManager.comboType = 0;
+
+            if(combo > 4)
+                AudioManager.comboType = 1;
+
+            if (combo > 6)
+                AudioManager.comboType = 2;
+
+            if (combo >8)
+                AudioManager.comboType = 3;
+
+            if (combo > 10)
+                AudioManager.comboType = 4;
+        }
+        
     }
 }

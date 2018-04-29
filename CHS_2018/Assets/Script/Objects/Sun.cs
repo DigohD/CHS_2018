@@ -11,6 +11,12 @@ public class Sun : MonoBehaviour {
 
     protected float velocity;
 
+    public AudioClip A_BeamStart;
+    public AudioClip A_BeamLoop;
+
+    public AudioSource BeamAudio;
+    public AudioSource MiscAudio;
+
     public GameObject P_ExplosionEffect;
 
     public GameObject G_Visuals;
@@ -22,6 +28,8 @@ public class Sun : MonoBehaviour {
     private float eatTimer = 1f;
     private float spikeVelocity = 1f;
     private float spikeTargetVelocity = 1f;
+
+    private bool beamCharged;
 
 	void Start () {
         tractorParticles = G_TractorBeam.GetComponent<ParticleSystem>();
@@ -38,6 +46,16 @@ public class Sun : MonoBehaviour {
 
             if (!tractorParticles.isPlaying)
                 tractorParticles.Play();
+
+            if (beamCharged && !BeamAudio.isPlaying)
+            {
+                BeamAudio.PlayOneShot(A_BeamLoop);
+            }
+            if (!BeamAudio.isPlaying)
+            {
+                BeamAudio.PlayOneShot(A_BeamStart);
+                beamCharged = true;
+            }
 
             Vector3 planetPos = MouseInput.currentlySelected.getPlanetPosition();
             G_TractorBeam.transform.position = planetPos;
@@ -71,6 +89,7 @@ public class Sun : MonoBehaviour {
 
             spikeTargetVelocity = 1f;
 
+            beamCharged = false;
             tractorParticles.Stop();
         }
 
