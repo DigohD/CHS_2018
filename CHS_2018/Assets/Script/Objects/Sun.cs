@@ -13,6 +13,7 @@ public class Sun : MonoBehaviour {
 
     public AudioClip A_BeamStart;
     public AudioClip A_BeamLoop;
+    public AudioClip A_VoidSick;
 
     public AudioSource BeamAudio;
     public AudioSource MiscAudio;
@@ -24,6 +25,8 @@ public class Sun : MonoBehaviour {
     public GameObject G_TractorBeam;
     public GameObject G_BlackHole;
     ParticleSystem tractorParticles;
+
+    public ParticleSystem voidSickParticles;
 
     private float eatTimer = 1f;
     private float spikeVelocity = 1f;
@@ -37,6 +40,15 @@ public class Sun : MonoBehaviour {
 
     float explodeTimer;
 	void Update () {
+        if(GameControl.isVoidSick && !voidSickParticles.isPlaying)
+        {
+            voidSickParticles.Play();
+            MiscAudio.PlayOneShot(A_VoidSick);
+        }else if(!GameControl.isVoidSick && voidSickParticles.isPlaying)
+        {
+            voidSickParticles.Stop();
+        }
+
         if (MouseInput.isChanneling && !GameControl.endingGame)
         {
             if (eatTimer > 0.1f)

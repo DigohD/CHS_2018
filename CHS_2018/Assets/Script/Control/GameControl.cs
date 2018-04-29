@@ -19,6 +19,9 @@ public class GameControl : MonoBehaviour {
     public static bool transitioning;
     public static bool endingGame;
 
+    public static bool isVoidSick;
+    private float voidSickTimer;
+
     public static bool mayWarp;
 
     private enum ShiftState { FADE_OUT, GENERATE_LEVEL, FADE_IN };
@@ -46,8 +49,14 @@ public class GameControl : MonoBehaviour {
     void Update () {
         timer += Time.deltaTime;
         timeTimer += Time.deltaTime;
+        voidSickTimer += Time.deltaTime;
 
-        if(combo > 1)
+        if(voidSickTimer > 5f && isVoidSick)
+        {
+            isVoidSick = false;
+        }
+
+        if (combo > 1)
         {
             comboTimer += Time.deltaTime;
             if(comboTimer > 5)
@@ -150,12 +159,21 @@ public class GameControl : MonoBehaviour {
 
     void generateLevel()
     {
+        int planetsSpawned = 0;
         for (int i = 2; i < 12; i++)
         {
-            if (Random.Range(0, 100) < 33f)
+            if(planetsSpawned == 0 && i == 10)
+            {
+
+            }else if(planetsSpawned < 2 && i == 11)
+            {
+
+            }
+            else if (Random.Range(0, 100) < 33f)
                 continue;
+            planetsSpawned++;
             GameObject newPlanet = Instantiate(P_Planet);
-            newPlanet.GetComponent<Planet>().init(i);
+            newPlanet.GetComponent<Planet>().init(i, planetsSpawned >= 2);
             planetList.Add(newPlanet);
         }
 
@@ -164,7 +182,7 @@ public class GameControl : MonoBehaviour {
 
     public static bool isInputFreezed()
     {
-        return transitioning || endingGame;
+        return transitioning || endingGame || isVoidSick;
     }
 
     public void planetDied()
@@ -190,6 +208,19 @@ public class GameControl : MonoBehaviour {
             if (combo > 10)
                 AudioManager.comboType = 4;
         }
-        
+    }
+
+    public void voidDied()
+    {
+        combo = 0;
+
+        isVoidSick = true;
+        voidSickTimer = 0;
+    }
+
+    public void satelliteDied()
+    {
+        combo += 5;
+        AudioManager.playSatellite = true;
     }
 }

@@ -16,11 +16,16 @@ public class HighscoreScreenUI : MonoBehaviour {
 
     private string inputName;
 
+    public Text scoreText;
+
     private void Start()
     {
         postButton.interactable = false;
         postButton.GetComponent<Image>().color = new Color(1, 1, 1, 0.3f);
         postButton.transform.GetChild(0).GetComponent<Text>().color = new Color(1, 1, 1, 0.3f);
+
+        scoreText.text = "Post Score: " + GameControl.score;
+        scoreText.transform.GetChild(0).GetComponent<Text>().text = "Post Score: " + GameControl.score;
 
         StartCoroutine(GetStatus());
     }
@@ -61,7 +66,7 @@ public class HighscoreScreenUI : MonoBehaviour {
         {
             postButton.interactable = true;
             postButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            postButton.transform.GetChild(0).GetComponent<Text>().color = new Color(0, 0, 0, 1);
+            postButton.transform.GetChild(0).GetComponent<Text>().color = new Color(1, 1, 1, 1);
         }
 
         inputName = name;

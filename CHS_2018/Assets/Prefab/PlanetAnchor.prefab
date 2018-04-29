@@ -411,6 +411,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 303c05fb98162074ab048ab1c361c57d, type: 2}
   - {fileID: 2100000, guid: 0b30df35e831cdb4cab063d68136e131, type: 2}
   - {fileID: 2100000, guid: 403d55f7012846646a0aa8a4989328aa, type: 2}
+  voidMaterial: {fileID: 2100000, guid: 6a85e7aa68e615144b10959484741efe, type: 2}
+  satelliteMesh: {fileID: 4300000, guid: cf87fb47af846af45b769ebb47493841, type: 3}
+  satelliteMaterial: {fileID: 2100000, guid: 8a78869bb6186ff4ba30a07d4b2b1e8a, type: 2}
 --- !u!114 &114976988241346836
 MonoBehaviour:
   m_ObjectHideFlags: 1
